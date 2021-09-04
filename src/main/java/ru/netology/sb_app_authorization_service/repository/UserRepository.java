@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import ru.netology.sb_app_authorization_service.entity.User;
 import ru.netology.sb_app_authorization_service.enums.Authorities;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,11 +17,18 @@ import java.util.List;
 public class UserRepository {
     private List<User> users;
 
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
     public List<Authorities> getUserAuthorities(String user, String password) {
+        List<Authorities> list = new ArrayList<>();
         for (User u : users) {
-            if(u.getName().equals(user) && u.getPassword().equals(password))
-                return u.getPermissions();
+            if(u.getName().equals(user) && u.getPassword().equals(password)) {
+                list = u.getPermissions();
+                return list;
+            }
         }
-        return Collections.emptyList();
+        return list;
     }
 }
